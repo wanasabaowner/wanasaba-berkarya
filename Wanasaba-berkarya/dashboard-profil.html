@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelola profil · Wanasaba Berkarya</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{pine:'#2f5d43',ink:'#1f2a24',cream:'#f7f6f2',mist:'#ebeee8'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style type="text/tailwindcss">.in{@apply w-full bg-white border border-black/15 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pine}.lbl{@apply block text-sm font-medium mb-2}.btn{@apply bg-pine text-white font-medium rounded-md px-6 py-3 disabled:opacity-60}.btn2{@apply border border-black/15 bg-white rounded-md px-6 py-3 font-medium}</style></head>
+<body class="bg-cream text-ink font-sans"><div id="shell"></div>
+
+<main id="isi" class="hidden">
+  <p class="text-xs tracking-widest text-pine uppercase">Profil kreator</p>
+  <h1 class="text-4xl font-bold tracking-tight">Kelola profil</h1>
+  <p class="text-black/60 mt-2 mb-8">Bantu calon klien mengenalmu lewat profil yang jelas dan kontak yang mudah ditemukan.</p>
+  <div id="pesan" class="hidden"></div>
+
+  <form id="form" class="bg-white border border-black/10 rounded-md p-6 md:p-8 space-y-6">
+    <h2 class="text-xl font-semibold">Informasi dasar</h2>
+    <div class="flex items-center gap-5">
+      <div id="foto" class="w-24 h-24 rounded-md overflow-hidden"></div>
+      <div>
+        <label class="btn2 inline-block cursor-pointer text-pine">Ganti foto<input id="file" type="file" accept="image/jpeg,image/png" class="hidden"></label>
+        <p class="text-xs text-black/50 mt-2">JPG atau PNG, maks. 5 MB.</p>
+      </div>
+    </div>
+    <div><label class="lbl" for="full_name">Nama lengkap</label><input id="full_name" class="in"></div>
+    <div><label class="lbl" for="headline">Headline (tampil di kartu)</label><input id="headline" class="in" placeholder="Fotografer &amp; videografer"></div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div><label class="lbl" for="category">Kategori utama</label><select id="category" class="in"></select></div>
+      <div><label class="lbl" for="skills">Keahlian (pisahkan koma)</label><input id="skills" class="in" placeholder="Fotografi, video, dokumenter"></div>
+    </div>
+    <div><label class="lbl" for="bio">Bio singkat</label><textarea id="bio" rows="4" maxlength="500" class="in"></textarea>
+      <p class="text-xs text-black/50 mt-2">Ceritakan apa yang kamu kerjakan dan pendekatanmu. Maks. 500 karakter.</p></div>
+    <div><label class="lbl" for="status">Status</label>
+      <select id="status" class="in"><option>Terbuka untuk proyek</option><option>Terbuka untuk kolaborasi</option></select></div>
+
+    <hr class="border-black/10">
+    <h2 class="text-xl font-semibold">Kontak &amp; media sosial</h2>
+    <div><label class="lbl" for="whatsapp">Nomor WhatsApp</label><input id="whatsapp" class="in" placeholder="+62 8xx xxxx xxxx">
+      <p class="text-xs text-black/50 mt-2">Dipakai calon klien lewat tombol WhatsApp di profil publik.</p></div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div><label class="lbl" for="instagram">Instagram</label><input id="instagram" class="in" placeholder="https://instagram.com/..."></div>
+      <div><label class="lbl" for="linkedin">LinkedIn</label><input id="linkedin" class="in" placeholder="https://linkedin.com/in/..."></div>
+      <div><label class="lbl" for="github">GitHub</label><input id="github" class="in" placeholder="https://github.com/..."></div>
+      <div><label class="lbl" for="youtube">YouTube</label><input id="youtube" class="in" placeholder="https://youtube.com/@..."></div>
+    </div>
+    <div class="flex gap-3 pt-2"><button id="simpan" type="submit" class="btn">Simpan perubahan</button><button id="batal" type="button" class="btn2">Batal</button></div>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/util.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/dashboard-profil.js"></script>
+</body></html>

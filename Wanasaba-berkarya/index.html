@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cari talenta · Wanasaba Berkarya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: {
+    colors: { pine: '#2f5d43', ink: '#1f2a24', cream: '#f7f6f2', mist: '#ebeee8' },
+    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-cream text-ink font-sans min-h-screen flex flex-col">
+
+  <header class="border-b border-black/10">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="bg-pine text-white font-bold w-10 h-10 rounded-md grid place-items-center">w.</span>
+        <span class="text-lg">Wanasaba Berkarya</span>
+      </a>
+      <nav class="flex items-center gap-6 text-sm">
+        <a href="index.html" class="hidden sm:block text-pine font-medium">Cari talenta</a>
+        <a href="masuk.html" class="hover:text-pine">Masuk</a>
+        <a href="daftar.html" class="bg-pine text-white px-5 py-3 rounded-md font-medium">Gabung direktori</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto px-6 w-full py-12">
+    <p class="text-xs tracking-widest font-medium text-pine">DIREKTORI ANGGOTA</p>
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mt-3">Temukan orang Wanasaba yang tepat untuk idemu.</h1>
+    <p class="mt-4 text-black/60">Kenali keahliannya, lihat karyanya, lalu mulai percakapan. Dari Wanasaba, untuk proyek berikutnya.</p>
+
+    <form id="form-cari" class="mt-8 flex gap-2 bg-white border border-black/15 rounded-md p-2">
+      <input id="cari" type="search" placeholder="Cari nama, keahlian, atau jasa yang kamu butuhkan"
+             class="flex-1 px-3 py-2 focus:outline-none bg-transparent">
+      <button class="bg-pine text-white font-medium rounded-md px-5">Cari talenta</button>
+    </form>
+
+    <!-- Chip bidang: diisi oleh js/katalog.js -->
+    <div id="chips" class="mt-6 flex flex-wrap gap-2"></div>
+
+    <p id="info" class="mt-8 pt-6 border-t border-black/10 text-sm text-black/60"></p>
+    <div id="grid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    <p id="kosong" class="hidden mt-10 text-center text-black/60">Belum ada talenta yang cocok. Coba kata kunci atau bidang lain.</p>
+    <div id="halaman" class="mt-10 flex items-center justify-end gap-4 text-sm"></div>
+  </main>
+
+  <footer class="border-t border-black/10 text-xs text-black/50">
+    <div class="max-w-6xl mx-auto px-6 py-5">© 2026 Wanasaba Berkarya</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/katalog.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar · Wanasaba Berkarya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: {
+    colors: { pine: '#2f5d43', ink: '#1f2a24', cream: '#f7f6f2', mist: '#ebeee8' },
+    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-cream text-ink font-sans min-h-screen flex flex-col">
+
+  <header class="border-b border-black/10">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="bg-pine text-white font-bold w-10 h-10 rounded-md grid place-items-center">w.</span>
+        <span class="text-lg">Wanasaba Berkarya</span>
+      </a>
+      <nav class="flex items-center gap-6 text-sm">
+        <a href="index.html" class="hidden sm:block hover:text-pine">Cari talenta</a>
+        <a href="masuk.html" class="hover:text-pine">Masuk</a>
+        <a href="daftar.html" class="bg-pine text-white px-5 py-3 rounded-md font-medium">Gabung direktori</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto px-6 w-full grid md:grid-cols-2 gap-16 items-center py-12">
+    <section class="hidden md:block">
+      <h1 class="text-5xl font-bold leading-tight tracking-tight">Mulai dari keahlian<br>yang kamu punya.</h1>
+      <p class="mt-6 text-black/60 leading-relaxed max-w-md">Buat profil, ceritakan prosesmu, dan pertemukan karyamu dengan orang yang membutuhkan.</p>
+    </section>
+
+    <section class="w-full max-w-md md:ml-auto">
+      <p class="text-sm font-medium text-pine">Keanggotaan kreator</p>
+      <h2 class="text-3xl font-bold tracking-tight mt-1">Daftar, lalu mulai berkarya.</h2>
+      <p class="mt-3 text-black/60">Akun khusus pemuda Desa Wanasaba. Satu tempat untuk profil dan portofoliomu.</p>
+
+      <div id="pesan" class="hidden mt-6 rounded-md px-4 py-3 text-sm" role="alert"></div>
+
+      <form id="form-daftar" class="mt-6 space-y-4" novalidate>
+        <div>
+          <label for="nama" class="block text-sm font-medium mb-2">Nama lengkap</label>
+          <input id="nama" type="text" required autocomplete="name" placeholder="Nama yang ingin kamu tampilkan"
+                 class="w-full bg-white border border-black/15 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pine">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium mb-2">Email</label>
+          <input id="email" type="email" required autocomplete="email" placeholder="nama@email.com"
+                 class="w-full bg-white border border-black/15 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pine">
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium mb-2">Kata sandi</label>
+          <div class="relative">
+            <input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="Buat kata sandi"
+                   class="w-full bg-white border border-black/15 rounded-md px-4 py-3 pr-20 focus:outline-none focus:ring-2 focus:ring-pine">
+            <button type="button" data-toggle-password class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-pine font-medium">Lihat</button>
+          </div>
+          <p class="text-xs text-black/50 mt-2">Gunakan setidaknya 8 karakter.</p>
+        </div>
+        <div>
+          <label for="konfirmasi" class="block text-sm font-medium mb-2">Konfirmasi kata sandi</label>
+          <div class="relative">
+            <input id="konfirmasi" type="password" required autocomplete="new-password" placeholder="Ulangi kata sandi"
+                   class="w-full bg-white border border-black/15 rounded-md px-4 py-3 pr-20 focus:outline-none focus:ring-2 focus:ring-pine">
+            <button type="button" data-toggle-password class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-pine font-medium">Lihat</button>
+          </div>
+        </div>
+        <label class="flex items-start gap-3 text-sm text-black/60">
+          <input id="setuju" type="checkbox" class="mt-1 accent-pine">
+          <span>Saya menyetujui Ketentuan Penggunaan dan Kebijakan Privasi Wanasaba Berkarya.</span>
+        </label>
+        <button id="tombol" type="submit" class="w-full bg-pine text-white font-medium rounded-md py-3 disabled:opacity-60">Daftar sebagai kreator</button>
+      </form>
+
+      <p class="mt-6 text-center text-black/60">Sudah punya akun? <a href="masuk.html" class="font-semibold text-pine">Masuk di sini</a></p>
+    </section>
+  </main>
+
+  <footer class="border-t border-black/10 text-xs text-black/50">
+    <div class="max-w-6xl mx-auto px-6 py-5">© 2026 Wanasaba Berkarya</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

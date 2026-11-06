@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tambah karya · Wanasaba Berkarya</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{pine:'#2f5d43',ink:'#1f2a24',cream:'#f7f6f2',mist:'#ebeee8'},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style type="text/tailwindcss">.in{@apply w-full bg-white border border-black/15 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pine}.lbl{@apply block text-sm font-medium mb-2}.btn{@apply bg-pine text-white font-medium rounded-md px-6 py-3 disabled:opacity-60}.btn2{@apply border border-black/15 bg-white rounded-md px-6 py-3 font-medium disabled:opacity-60}</style></head>
+<body class="bg-cream text-ink font-sans"><div id="shell"></div>
+
+<main id="isi" class="hidden">
+  <a href="dashboard-karya.html" class="text-sm text-pine">← Kembali ke karya saya</a>
+  <p class="text-xs tracking-widest text-pine uppercase mt-6">Portofoliomu</p>
+  <h1 id="judul-halaman" class="text-4xl font-bold tracking-tight">Tambah karya</h1>
+  <p class="text-black/60 mt-2 mb-8">Pilih gambar yang bercerita, lalu tambahkan sedikit konteks tentang karyamu.</p>
+  <div id="pesan" class="hidden"></div>
+
+  <form id="form" class="bg-white border border-black/10 rounded-md p-6 md:p-8 space-y-6">
+    <div><label class="lbl" for="title">Judul karya *</label><input id="title" class="in"></div>
+    <div><label class="lbl" for="description">Deskripsi *</label><textarea id="description" rows="4" class="in"></textarea>
+      <p class="text-xs text-black/50 mt-2">Ceritakan ide, proses, atau perananmu dalam karya ini.</p></div>
+    <div><label class="lbl" for="category">Kategori *</label><select id="category" class="in"></select></div>
+
+    <hr class="border-black/10">
+    <div><span class="lbl">Jenis karya</span><div id="jenis" class="grid grid-cols-3 gap-3"></div></div>
+    <div>
+      <span class="lbl">Gambar sampul / preview *</span>
+      <div class="flex items-center gap-4">
+        <div id="sampul" class="w-40 h-28 rounded overflow-hidden"></div>
+        <label class="btn2 cursor-pointer text-pine">Pilih gambar<input id="file" type="file" accept="image/jpeg,image/png" class="hidden"></label>
+      </div>
+      <p class="text-xs text-black/50 mt-2">JPG atau PNG, maks. 5 MB. Disarankan rasio 3:2.</p>
+    </div>
+    <div><label class="lbl" for="video_url">Link video (opsional)</label><input id="video_url" class="in" placeholder="https://youtube.com/... atau https://vimeo.com/..."></div>
+    <div><label class="lbl" for="project_url">Link proyek (opsional)</label><input id="project_url" class="in" placeholder="https://alamat-proyekmu.com"></div>
+
+    <div class="flex flex-wrap items-center justify-end gap-3 pt-2 border-t border-black/10">
+      <a href="dashboard-karya.html" class="mr-auto text-black/60">Batal</a>
+      <button type="button" id="draf" class="btn2">Simpan draf</button>
+      <button type="button" id="terbit" class="btn">Terbitkan karya ↗</button>
+    </div>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/util.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/tambah-karya.js"></script>
+</body></html>
