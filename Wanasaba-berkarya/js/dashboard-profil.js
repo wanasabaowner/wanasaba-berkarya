@@ -9,6 +9,19 @@ function isiForm() {
   KOLOM.forEach((k) => { document.getElementById(k).value = ctx.profil?.[k] || '' })
   document.getElementById('foto').innerHTML = gambarAtauInisial(ctx.profil?.avatar_url, ctx.profil?.full_name, 'w-full h-full')
   fileBaru = null
+  pratinjau()
+}
+
+// Kartu pratinjau mengikuti isi form setiap kali ada ketikan atau foto baru.
+function pratinjau() {
+  const v = (id) => document.getElementById(id).value.trim()
+  document.getElementById('pv-foto').innerHTML = document.getElementById('foto').innerHTML
+  document.getElementById('pv-nama').textContent = v('full_name') || 'Nama lengkap'
+  document.getElementById('pv-headline').textContent = v('headline') || 'Headline kamu'
+  const kategori = document.getElementById('pv-kategori')
+  kategori.textContent = v('category')
+  kategori.classList.toggle('hidden', !v('category'))
+  document.getElementById('pv-status').textContent = '● ' + v('status')
 }
 
 async function mulai() {
@@ -25,6 +38,9 @@ document.getElementById('file').addEventListener('change', (e) => {
     `<img src="${URL.createObjectURL(fileBaru)}" alt="" class="w-full h-full object-cover">`
 })
 document.getElementById('batal').addEventListener('click', isiForm)
+// 'input' = ketikan, 'change' = pilihan dropdown/foto (naik dari elemen ke form)
+document.getElementById('form').addEventListener('input', pratinjau)
+document.getElementById('form').addEventListener('change', pratinjau)
 
 document.getElementById('form').addEventListener('submit', async (e) => {
   e.preventDefault()
@@ -39,9 +55,11 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   tombol.disabled = true
   tombol.textContent = 'Menyimpan...'
   try {
+    const avatarLama = ctx.profil?.avatar_url
     if (fileBaru) nilai.avatar_url = await unggahGambar(fileBaru, ctx.user.id)
     const { error } = await supabaseClient.from('profiles').update(nilai).eq('id', ctx.user.id)
     if (error) throw error
+    if (fileBaru) await hapusFileLama(avatarLama)   // foto lama sudah tidak dipakai
     ctx.profil = { ...ctx.profil, ...nilai }
     isiForm()
     pesan('Perubahan tersimpan.')
