@@ -68,3 +68,16 @@ async function unggahGambar(file, userId) {
   if (error) throw new Error('Gagal mengunggah gambar: ' + error.message)
   return supabaseClient.storage.from(BUCKET).getPublicUrl(path).data.publicUrl
 }
+
+// Hapus file lama di Storage berdasarkan URL publiknya, supaya kuota 1 GB
+// tidak habis oleh gambar yang sudah tidak dipakai. Gagal pun tidak masalah
+// (hanya pembersihan), jadi error diabaikan.
+async function hapusFileLama(url) {
+  try {
+    const penanda = `/object/public/${BUCKET}/`
+    const i = (url || '').indexOf(penanda)
+    if (i === -1) return
+    const path = decodeURIComponent(url.slice(i + penanda.length).split('?')[0])
+    await supabaseClient.storage.from(BUCKET).remove([path])
+  } catch (e) { /* abaikan */ }
+}
