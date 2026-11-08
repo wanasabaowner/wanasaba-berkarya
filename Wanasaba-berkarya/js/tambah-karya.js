@@ -70,6 +70,7 @@ async function simpan(status) {
       ? await supabaseClient.from('portfolios').update(data).eq('id', idEdit).eq('user_id', ctx.user.id)
       : await supabaseClient.from('portfolios').insert({ ...data, user_id: ctx.user.id })
     if (error) throw error
+    if (idEdit && fileBaru) await hapusFileLama(coverLama)   // sampul lama sudah diganti
     location.href = 'dashboard-karya.html'
   } catch (err) {
     pesan(err.message, 'error')
