@@ -57,6 +57,7 @@ document.getElementById('daftar').addEventListener('click', async (e) => {
   if (!b || !confirm('Hapus karya ini? Tindakan ini tidak bisa dibatalkan.')) return
   const { error } = await supabaseClient.from('portfolios').delete().eq('id', b.dataset.hapus).eq('user_id', ctx.user.id)
   if (error) return pesan('Gagal menghapus: ' + error.message, 'error')
+  await hapusFileLama(semua.find((k) => k.id === b.dataset.hapus)?.cover_image)   // hapus sampulnya juga
   semua = semua.filter((k) => k.id !== b.dataset.hapus)
   gambar()
   pesan('Karya dihapus.')
