@@ -13,6 +13,7 @@
   <p class="text-black/60 mt-2 mb-8">Bantu calon klien mengenalmu lewat profil yang jelas dan kontak yang mudah ditemukan.</p>
   <div id="pesan" class="hidden"></div>
 
+  <div class="grid lg:grid-cols-[1fr_18rem] gap-6 items-start">
   <form id="form" class="bg-white border border-black/10 rounded-md p-6 md:p-8 space-y-6">
     <h2 class="text-xl font-semibold">Informasi dasar</h2>
     <div class="flex items-center gap-5">
@@ -45,6 +46,15 @@
     </div>
     <div class="flex gap-3 pt-2"><button id="simpan" type="submit" class="btn">Simpan perubahan</button><button id="batal" type="button" class="btn2">Batal</button></div>
   </form>
+  <aside class="bg-white border border-black/10 rounded-md p-5 lg:sticky lg:top-6">
+    <p class="text-xs tracking-widest text-black/50 uppercase mb-3">Pratinjau profil</p>
+    <div id="pv-foto" class="w-full aspect-[4/3] rounded-md overflow-hidden"></div>
+    <p id="pv-nama" class="text-xl font-semibold mt-4"></p>
+    <p id="pv-headline" class="text-sm mt-1"></p>
+    <span id="pv-kategori" class="hidden text-xs bg-mist text-pine rounded-full px-3 py-1 mt-3"></span>
+    <p id="pv-status" class="text-sm text-pine mt-3"></p>
+  </aside>
+  </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
