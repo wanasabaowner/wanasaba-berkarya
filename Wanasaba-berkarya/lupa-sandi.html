@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lupa kata sandi · Wanasaba Berkarya</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{pine:'#2f5d43',ink:'#1f2a24',cream:'#f7f6f2',mist:'#ebeee8'}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tema.css"></head>
+<body class="bg-cream text-ink min-h-screen">
+  <header class="border-b border-black/10"><div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3"><span class="bg-pine text-white font-bold w-10 h-10 rounded-md grid place-items-center">w.</span><span class="text-lg">Wanasaba Berkarya</span></a>
+    <a href="masuk.html" class="text-sm">Masuk</a></div></header>
+
+  <main class="max-w-md mx-auto px-6 py-20">
+    <h1 class="text-4xl">Lupa kata sandi?</h1>
+    <p class="mt-4 text-black/60">Masukkan email akunmu. Kami kirim tautan untuk membuat kata sandi baru.</p>
+    <div id="pesan" class="mt-6 rounded-md px-4 py-3 text-sm hidden" role="alert"></div>
+    <form id="form-lupa" class="mt-6 space-y-5" novalidate>
+      <div><label for="email" class="block text-sm font-medium mb-2">Email</label>
+        <input id="email" type="email" required autocomplete="email" placeholder="nama@email.com" class="w-full bg-white border border-black/15 rounded-md px-4 py-3"></div>
+      <button id="tombol" type="submit" class="w-full bg-pine text-white font-medium rounded-md py-3 disabled:opacity-60">Kirim tautan</button>
+    </form>
+    <p class="mt-6 text-black/60"><a href="masuk.html" class="font-semibold text-pine">Kembali ke halaman masuk</a></p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/sandi.js"></script>
+</body></html>
