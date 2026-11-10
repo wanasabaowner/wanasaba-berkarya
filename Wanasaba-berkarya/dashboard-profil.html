@@ -24,11 +24,11 @@
         <p class="text-xs text-black/50 mt-2">JPG atau PNG, maks. 5 MB.</p>
       </div>
     </div>
-    <div><label class="lbl" for="full_name">Nama lengkap</label><input id="full_name" class="in"></div>
-    <div><label class="lbl" for="headline">Headline (tampil di kartu)</label><input id="headline" class="in" placeholder="Fotografer &amp; videografer"></div>
+    <div><label class="lbl" for="full_name">Nama lengkap</label><input id="full_name" maxlength="80" class="in"></div>
+    <div><label class="lbl" for="headline">Headline (tampil di kartu)</label><input id="headline" maxlength="80" class="in" placeholder="Fotografer &amp; videografer"></div>
     <div class="grid md:grid-cols-2 gap-4">
       <div><label class="lbl" for="category">Kategori utama</label><select id="category" class="in"></select></div>
-      <div><label class="lbl" for="skills">Keahlian (pisahkan koma)</label><input id="skills" class="in" placeholder="Fotografi, video, dokumenter"></div>
+      <div><label class="lbl" for="skills">Keahlian (pisahkan koma)</label><input id="skills" maxlength="200" class="in" placeholder="Fotografi, video, dokumenter"></div>
     </div>
     <div><label class="lbl" for="bio">Bio singkat</label><textarea id="bio" rows="4" maxlength="500" class="in"></textarea>
       <p class="text-xs text-black/50 mt-2">Ceritakan apa yang kamu kerjakan dan pendekatanmu. Maks. 500 karakter.</p></div>
@@ -37,7 +37,7 @@
 
     <hr class="border-black/10">
     <h2 class="text-xl font-semibold">Kontak &amp; media sosial</h2>
-    <div><label class="lbl" for="whatsapp">Nomor WhatsApp</label><input id="whatsapp" class="in" placeholder="+62 8xx xxxx xxxx">
+    <div><label class="lbl" for="whatsapp">Nomor WhatsApp</label><input id="whatsapp" maxlength="24" class="in" placeholder="+62 8xx xxxx xxxx">
       <p class="text-xs text-black/50 mt-2">Dipakai calon klien lewat tombol WhatsApp di profil publik.</p></div>
     <div class="grid md:grid-cols-2 gap-4">
       <div><label class="lbl" for="instagram">Instagram</label><input id="instagram" class="in" placeholder="https://instagram.com/..."></div>
