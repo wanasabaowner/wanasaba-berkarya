@@ -31,8 +31,21 @@ function waLink(nomor) {
   if (!d) return ''
   if (d.startsWith('0')) d = '62' + d.slice(1)
   else if (d.startsWith('8')) d = '62' + d
+  if (d.startsWith('620')) d = '62' + d.slice(3)   // '+62 (0)812...' → 62812...
   return 'https://wa.me/' + d
 }
 
 // Lingkaran berisi huruf pertama nama, dipakai kalau belum ada foto profil.
 function inisial(nama) { return esc((nama || '?').trim().charAt(0).toUpperCase()) }
+
+// Kalau sudah login, "Masuk" di menu atas berubah jadi "Ruang kreator" dan
+// tombol "Gabung direktori" disembunyikan (halaman dashboard tidak punya tautan ini, jadi dilewati).
+;(async () => {
+  const masuk = document.querySelector('header a[href="masuk.html"]')
+  if (!masuk || typeof supabaseClient === 'undefined') return
+  const { data } = await supabaseClient.auth.getSession()
+  if (!data.session) return
+  masuk.href = 'dashboard-profil.html'
+  masuk.textContent = 'Ruang kreator'
+  document.querySelector('header a[href="daftar.html"]')?.remove()
+})()
