@@ -16,7 +16,7 @@ function kartuKarya(k) {
     <div class="aspect-[3/2] rounded-md overflow-hidden bg-mist">
       ${gambar ? `<img src="${esc(gambar)}" alt="${esc(k.title)}" class="w-full h-full object-cover">` : ''}
     </div>
-    <p class="mt-4 text-xs tracking-widest text-black/50">${esc((k.category || '').toUpperCase())}</p>
+    <p class="mt-4 text-xs tracking-widest text-black/50">${esc(k.category || '')}</p>
     <h3 class="text-xl font-bold mt-1">${esc(k.title)}</h3>
     <p class="text-black/60 mt-2">${esc(k.description)}</p>
     ${tujuan[0] ? `<a href="${esc(tujuan[0])}" target="_blank" rel="noopener" class="inline-block mt-3 text-sm font-semibold text-pine">${tujuan[1]} →</a>` : ''}
@@ -75,7 +75,7 @@ async function muatProfil() {
   </section>
 
   <section class="mt-14 pt-10 border-t border-black/10">
-    <p class="text-xs tracking-widest font-medium text-pine">PORTOFOLIO PILIHAN</p>
+    <p class="text-xs tracking-widest font-medium text-pine">Portofolio pilihan</p>
     <h2 class="text-3xl font-bold tracking-tight mt-2">Karya terbaru</h2>
     <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       ${karya.data && karya.data.length ? karya.data.map(kartuKarya).join('')
