@@ -6,7 +6,15 @@ let ctx = null       // { user, profil } dari mulaiDashboard()
 let fileBaru = null  // foto yang dipilih tapi belum diunggah
 
 function isiForm() {
-  KOLOM.forEach((k) => { document.getElementById(k).value = ctx.profil?.[k] || '' })
+  KOLOM.forEach((k) => {
+    const el = document.getElementById(k)
+    const nilai = ctx.profil?.[k] || ''
+    // Nilai yang belum ada di daftar pilihan (mis. diisi manual lewat Table Editor)
+    // ditambahkan dulu; kalau tidak, dropdown tampak kosong dan nilainya TERHAPUS saat disimpan.
+    if (el.tagName === 'SELECT' && nilai && ![...el.options].some((o) => o.value === nilai))
+      el.insertAdjacentHTML('beforeend', `<option>${esc(nilai)}</option>`)
+    el.value = nilai
+  })
   document.getElementById('foto').innerHTML = gambarAtauInisial(ctx.profil?.avatar_url, ctx.profil?.full_name, 'w-full h-full')
   fileBaru = null
   pratinjau()
@@ -47,6 +55,7 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   const nilai = {}
   KOLOM.forEach((k) => { nilai[k] = document.getElementById(k).value.trim() || null })
   if (!nilai.full_name) return pesan('Nama lengkap wajib diisi.', 'error')
+  nilai.status = nilai.status || 'Terbuka untuk proyek'   // kolom ini tidak boleh kosong di database
   for (const k of ['instagram', 'linkedin', 'github', 'youtube']) {
     if (nilai[k] && !safeUrl(nilai[k])) return pesan(`Tautan ${k} tidak valid.`, 'error')
     if (nilai[k]) nilai[k] = safeUrl(nilai[k])   // lengkapi "https://" bila belum ada
@@ -57,7 +66,7 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   try {
     const avatarLama = ctx.profil?.avatar_url
     if (fileBaru) nilai.avatar_url = await unggahGambar(fileBaru, ctx.user.id)
-    const { error } = await supabaseClient.from('profiles').update(nilai).eq('id', ctx.user.id)
+    const { error } = await supabaseClient.from('profiles').upsert({ id: ctx.user.id, ...nilai })   // ubah bila profil ada, buat bila hilang (tidak ada lagi 'tersimpan' palsu)
     if (error) throw error
     if (fileBaru) await hapusFileLama(avatarLama)   // foto lama sudah tidak dipakai
     ctx.profil = { ...ctx.profil, ...nilai }
