@@ -30,6 +30,7 @@ async function mulai() {
     const { data: k } = await supabaseClient.from('portfolios').select('*')
       .eq('id', idEdit).eq('user_id', ctx.user.id).maybeSingle()
     if (!k) return pesan('Karya tidak ditemukan.', 'error')
+    if (k.category && !KATEGORI_KARYA.includes(k.category)) document.getElementById('category').insertAdjacentHTML('beforeend', `<option>${esc(k.category)}</option>`)
     ;['title', 'description', 'category', 'video_url', 'project_url'].forEach((f) => { document.getElementById(f).value = k[f] || '' })
     jenis = k.work_type
     coverLama = k.cover_image || ''
@@ -56,6 +57,8 @@ async function simpan(status) {
   if (!data.title) return pesan('Judul karya wajib diisi.', 'error')
   if (status === 'terbit' && (!data.description || !data.category || !(fileBaru || coverLama)))
     return pesan('Untuk menerbitkan, lengkapi deskripsi, kategori, dan gambar sampul.', 'error')
+  if (status === 'terbit' && ((jenis === 'video' && !data.video_url) || (jenis === 'link' && !data.project_url)))
+    return pesan(jenis === 'video' ? 'Karya video perlu link video sebelum diterbitkan.' : 'Karya jenis link perlu link proyek sebelum diterbitkan.', 'error')
   for (const k of ['video_url', 'project_url']) {
     if (!data[k]) continue
     data[k] = safeUrl(data[k])
