@@ -27,13 +27,18 @@
     <div><label class="lbl" for="full_name">Nama lengkap</label><input id="full_name" maxlength="80" class="in"></div>
     <div><label class="lbl" for="headline">Headline (tampil di kartu)</label><input id="headline" maxlength="80" class="in" placeholder="Fotografer &amp; videografer"></div>
     <div class="grid md:grid-cols-2 gap-4">
-      <div><label class="lbl" for="category">Kategori utama</label><select id="category" class="in"></select></div>
+      <fieldset class="md:col-span-2"><legend class="lbl">Bidang (pilih satu atau lebih)</legend>
+        <div id="bidang" class="flex flex-wrap gap-x-5 gap-y-2"></div>
+        <input id="bidang_lain" maxlength="100" class="in mt-3" placeholder="Bidang lain, pisahkan koma (mis. Tata rias, Pengrajin bambu)">
+        <p class="text-xs text-black/50 mt-2">Maksimal 5 bidang. Bidang yang kamu tulis sendiri akan muncul sebagai pilihan di katalog.</p></fieldset>
       <div><label class="lbl" for="skills">Keahlian (pisahkan koma)</label><input id="skills" maxlength="200" class="in" placeholder="Fotografi, video, dokumenter"></div>
     </div>
     <div><label class="lbl" for="bio">Bio singkat</label><textarea id="bio" rows="4" maxlength="500" class="in"></textarea>
       <p class="text-xs text-black/50 mt-2">Ceritakan apa yang kamu kerjakan dan pendekatanmu. Maks. 500 karakter.</p></div>
     <div><label class="lbl" for="status">Status</label>
       <select id="status" class="in"><option>Terbuka untuk proyek</option><option>Terbuka untuk kolaborasi</option></select></div>
+    <label class="flex items-start gap-3 text-sm"><input id="is_hidden" type="checkbox" class="mt-1 accent-pine">
+      <span><strong>Sembunyikan profil</strong> dari katalog dan halaman publik. Data dan karyamu tetap tersimpan; hilangkan centang untuk menampilkannya lagi.</span></label>
 
     <hr class="border-black/10">
     <h2 class="text-xl font-semibold">Kontak &amp; media sosial</h2>
