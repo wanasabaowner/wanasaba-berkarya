@@ -30,7 +30,7 @@ function terjemahError(pesan) {
   if (p.includes('invalid login')) return 'Email atau kata sandi salah.'
   if (p.includes('not confirmed')) return 'Email belum dikonfirmasi. Cek kotak masuk emailmu.'
   if (p.includes('already registered')) return 'Email ini sudah terdaftar. Silakan masuk.'
-  if (p.includes('rate limit')) return 'Terlalu banyak percobaan. Coba lagi beberapa menit lagi.'
+  if (pesanBatas(pesan)) return pesanBatas(pesan)
   if (p.includes('password')) return 'Kata sandi belum memenuhi syarat (minimal 8 karakter).'
   return 'Terjadi kesalahan: ' + pesan
 }
