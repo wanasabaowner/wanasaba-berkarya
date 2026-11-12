@@ -31,7 +31,9 @@ function kartu(k) {
 }
 
 // tambah = true → tambahkan di bawah yang sudah ada ("Tampilkan lebih banyak")
+let permintaan = 0
 async function muat(tambah = false) {
+  const nomor = ++permintaan
   if (!tambah) {
     state.halaman = 0
     elGrid.innerHTML = '<p class="text-black/50 col-span-full">Memuat karya...</p>'
@@ -43,6 +45,7 @@ async function muat(tambah = false) {
     .eq('status', 'terbit')
   if (state.kategori !== 'Semua') q = q.eq('category', state.kategori)
   const { data, count, error } = await q.order('updated_at', { ascending: false }).range(dari, dari + PER_HALAMAN - 1)
+  if (nomor !== permintaan) return   // hasil basi, abaikan
 
   if (error) {
     elGrid.innerHTML = `<p class="text-red-800 col-span-full">Gagal memuat karya: ${esc(error.message)}</p>`
