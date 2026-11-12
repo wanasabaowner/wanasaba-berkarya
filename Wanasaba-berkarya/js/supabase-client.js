@@ -16,8 +16,8 @@
 //    Pakai PUBLISHABLE key (awalan sb_publishable_...).
 //    JANGAN PERNAH menaruh secret key / service_role di file ini,
 //    karena file ini dikirim ke browser dan bisa dibaca siapa saja.
-const SUPABASE_URL = 'https://ISI-PROJECT-ID-MU.supabase.co'
-const SUPABASE_KEY = 'sb_publishable_ISI-KUNCI-MU'
+const SUPABASE_URL = 'https://biciaghuqjdfmvupwisq.supabase.co'
+const SUPABASE_KEY = 'sb_publishable_7Js8D1jXybclHgAEwnGIdA_38byscsL'
 
 // 2) Library dari CDN menyediakan objek global bernama "supabase".
 //    createClient() membuat penghubung ke proyek kita.
