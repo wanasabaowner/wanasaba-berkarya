@@ -3,9 +3,9 @@
 // =====================================================================
 const PER_HALAMAN = 6
 
-// "kata" = potongan teks yang dicocokkan ke kolom category & skills.
-// Dibuat potongan (bukan nama persis) supaya 'foto' cocok dengan kategori
-// 'Foto & video' maupun keahlian 'Fotografi'.
+// "kata" = potongan teks yang dicocokkan ke kolom category (daftar bidang yang
+// dipilih kreator, dipisah koma, mis. 'Fotografi, Video, Tata rias').
+// Bidang tulisan sendiri yang tidak punya chip tampil di dropdown "Bidang lain".
 const BIDANG = [
   { label: 'Semua bidang', kata: '' },
   { label: 'Fotografi', kata: 'foto' },
@@ -21,18 +21,43 @@ const BIDANG = [
 const state = { kata: '', bidang: '', halaman: 1 }
 
 const $grid = document.getElementById('grid')
+let bidangLain = []   // bidang tulisan sendiri kreator (di luar daftar standar)
 
 function gambarChip() {
   document.getElementById('chips').innerHTML = BIDANG.map((b) => {
     const aktif = b.kata === state.bidang
     return `<button data-kata="${b.kata}" class="px-4 py-2 rounded-full text-sm border ${
       aktif ? 'bg-pine text-white border-pine' : 'border-black/20 text-black/60 hover:border-pine'}">${esc(b.label)}</button>`
-  }).join('')
+  }).join('') + pilihanLain()
+}
+
+function pilihanLain() {
+  if (!bidangLain.length) return ''
+  const aktif = bidangLain.includes(state.bidang)
+  return `<select id="bidang-lain" aria-label="Bidang lain" class="px-4 py-2 rounded-full text-sm border bg-transparent ${aktif ? 'border-pine text-pine font-medium' : 'border-black/20 text-black/60'}">
+    <option value="">Bidang lain…</option>${bidangLain.map((b) => `<option value="${esc(b)}" ${b === state.bidang ? 'selected' : ''}>${esc(b)}</option>`).join('')}</select>`
+}
+
+// Kumpulkan bidang yang tidak punya chip sendiri, urut dari yang paling banyak dipakai.
+async function muatBidangLain() {
+  const { data } = await supabaseClient.from('profiles').select('category')
+    .not('headline', 'is', null).neq('headline', '').neq('full_name', '').limit(1000)
+  const hitung = new Map()
+  for (const r of data || []) {
+    for (const b of (r.category || '').split(',').map((t) => t.trim()).filter(Boolean)) {
+      if (BIDANG.some((s) => s.kata && b.toLowerCase().includes(s.kata))) continue   // sudah punya chip
+      const k = b.toLowerCase()
+      hitung.set(k, { nama: hitung.get(k)?.nama || b, n: (hitung.get(k)?.n || 0) + 1 })
+    }
+  }
+  bidangLain = [...hitung.values()].sort((a, b) => b.n - a.n).slice(0, 30).map((x) => x.nama)
+  gambarChip()
 }
 
 function kartu(p) {
   const foto = safeUrl(p.avatar_url)
   const keahlian = daftarKeahlian(p.skills).slice(0, 3).join(' · ')
+  const bidang = (p.category || '').split(',').map((t) => t.trim()).filter(Boolean)   // bisa lebih dari satu
   return `
   <article class="flex flex-col">
     <div class="aspect-[5/3] rounded-md overflow-hidden bg-mist grid place-items-center">
@@ -41,7 +66,7 @@ function kartu(p) {
     </div>
     <div class="mt-4 flex items-start justify-between gap-3">
       <h2 class="text-xl font-bold">${esc(p.full_name)}</h2>
-      ${p.category ? `<span class="shrink-0 text-xs bg-mist text-pine rounded-full px-3 py-1">${esc(p.category)}</span>` : ''}
+      ${bidang.length ? `<span title="${esc(bidang.join(', '))}" class="shrink-0 text-xs bg-mist text-pine rounded-full px-3 py-1">${esc(bidang[0])}${bidang.length > 1 ? ` +${bidang.length - 1}` : ''}</span>` : ''}
     </div>
     <p class="mt-1">${esc(p.headline)}</p>
     <p class="text-sm text-black/50 mt-1 min-h-[1.25rem]">${esc(keahlian)}</p>
@@ -68,11 +93,13 @@ async function muatTalenta() {
     .not('headline', 'is', null)   // sembunyikan profil yang belum dilengkapi
     .neq('headline', '')
     .neq('full_name', '')
+    .eq('is_hidden', false)   // profil yang disembunyikan pemiliknya
     .order('created_at', { ascending: false })
     .range(dari, dari + PER_HALAMAN - 1)
 
-  // Chip bidang: cocokkan ke kategori, keahlian, atau headline
-  if (state.bidang) q = q.or(`category.ilike.%${state.bidang}%,skills.ilike.%${state.bidang}%,headline.ilike.%${state.bidang}%`)
+  // Chip/dropdown bidang: cocokkan ke daftar bidang yang dipilih kreator
+  const kb = bersihkan(state.bidang)
+  if (kb) q = q.ilike('category', `%${kb}%`)
   // Kotak cari: tiap kata dicari sendiri (semua kata harus cocok) di nama, headline, kategori, keahlian.
   // Dulu kategori tidak ikut dicari, jadi mengetik "kerajinan" atau "penulisan" tidak menemukan siapa pun.
   for (const kata of bersihkan(state.kata).split(/\s+/).filter(Boolean).slice(0, 5))
@@ -118,5 +145,15 @@ document.getElementById('halaman').addEventListener('click', (e) => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
 
+document.getElementById('chips').addEventListener('change', (e) => {   // dropdown "Bidang lain"
+  if (e.target.id !== 'bidang-lain') return
+  state.bidang = e.target.value
+  state.kata = document.getElementById('cari').value
+  state.halaman = 1
+  gambarChip()
+  muatTalenta()
+})
+
 gambarChip()
 muatTalenta()
+muatBidangLain()
