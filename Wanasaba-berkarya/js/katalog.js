@@ -11,7 +11,7 @@ const BIDANG = [
   { label: 'Fotografi', kata: 'foto' },
   { label: 'Desain', kata: 'desain' },
   { label: 'Video', kata: 'video' },
-  { label: 'Penulisan', kata: 'tulis' },
+  { label: 'Penulisan', kata: 'nulis' },   // 'nulis' cocok dgn Penulisan/Penulis/Menulis; 'tulis' TIDAK cocok dgn 'Penulisan'
   { label: 'Kerajinan', kata: 'kerajinan' },
   { label: 'Teknologi', kata: 'teknologi' },
   { label: 'Musik & seni', kata: 'musik' },
@@ -55,24 +55,31 @@ function kartu(p) {
 // Hapus karakter yang merusak sintaks filter PostgREST (koma, kurung, %, *).
 const bersihkan = (t) => t.replace(/[,()%*\\]/g, ' ').trim()
 
+let permintaan = 0   // nomor permintaan terbaru; hasil permintaan lama diabaikan
 async function muatTalenta() {
+  const nomor = ++permintaan
   $grid.innerHTML = ''
   document.getElementById('info').textContent = 'Memuat...'
 
   const dari = (state.halaman - 1) * PER_HALAMAN
   let q = supabaseClient
     .from('profiles')
-    .select('*', { count: 'exact' })
+    .select('id, full_name, headline, category, skills, avatar_url, status', { count: 'exact' })
     .not('headline', 'is', null)   // sembunyikan profil yang belum dilengkapi
     .neq('headline', '')
+    .neq('full_name', '')
     .order('created_at', { ascending: false })
     .range(dari, dari + PER_HALAMAN - 1)
 
-  if (state.bidang) q = q.or(`category.ilike.%${state.bidang}%,skills.ilike.%${state.bidang}%`)
-  const k = bersihkan(state.kata)
-  if (k) q = q.or(`full_name.ilike.%${k}%,headline.ilike.%${k}%,skills.ilike.%${k}%`)
+  // Chip bidang: cocokkan ke kategori, keahlian, atau headline
+  if (state.bidang) q = q.or(`category.ilike.%${state.bidang}%,skills.ilike.%${state.bidang}%,headline.ilike.%${state.bidang}%`)
+  // Kotak cari: tiap kata dicari sendiri (semua kata harus cocok) di nama, headline, kategori, keahlian.
+  // Dulu kategori tidak ikut dicari, jadi mengetik "kerajinan" atau "penulisan" tidak menemukan siapa pun.
+  for (const kata of bersihkan(state.kata).split(/\s+/).filter(Boolean).slice(0, 5))
+    q = q.or(`full_name.ilike.%${kata}%,headline.ilike.%${kata}%,category.ilike.%${kata}%,skills.ilike.%${kata}%`)
 
   const { data, count, error } = await q
+  if (nomor !== permintaan) return   // sudah ada permintaan yang lebih baru
   if (error) {
     document.getElementById('info').textContent = 'Gagal memuat data: ' + error.message
     return
@@ -99,6 +106,7 @@ document.getElementById('form-cari').addEventListener('submit', (e) => {
 document.getElementById('chips').addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return
   state.bidang = b.dataset.kata
+  state.kata = document.getElementById('cari').value   // samakan dengan yang tampil di kotak cari
   state.halaman = 1
   gambarChip()
   muatTalenta()
