@@ -35,7 +35,7 @@ function pratinjau() {
   document.getElementById('pv-status').textContent = '● ' + v('status')
 }
 
-const BIDANG_STANDAR = ['Fotografi', 'Video', 'Desain', 'Penulisan', 'Kerajinan', 'Teknologi', 'Musik & seni']
+// BIDANG_STANDAR sekarang ada di dashboard.js (dipakai bersama form karya)
 
 // Gabungan kotak yang dicentang + isian "bidang lain" → daftar rapi tanpa duplikat
 // (besar/kecil huruf dianggap sama), tiap bidang maksimal 30 karakter.
