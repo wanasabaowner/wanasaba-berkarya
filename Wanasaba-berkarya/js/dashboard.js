@@ -2,7 +2,9 @@
 //  js/dashboard.js  ·  LANGKAH 6 — Fungsi bersama semua halaman dashboard
 //  Urutan <script>: supabase lib → supabase-client → util → dashboard → halaman
 // =====================================================================
-const KATEGORI_PROFIL = ['Foto & video', 'Desain', 'Kerajinan', 'Penulisan', 'Teknologi', 'Musik & seni']
+// Bidang standar: dipakai profil (kotak centang) dan kategori karya (dropdown).
+// Bidang di luar daftar ditulis sendiri oleh kreator.
+const BIDANG_STANDAR = ['Fotografi', 'Video', 'Desain', 'Penulisan', 'Kerajinan', 'Teknologi', 'Musik & seni']
 const KATEGORI_KARYA = ['Fotografi', 'Video', 'Dokumenter', 'Desain', 'Penulisan', 'Kerajinan', 'Teknologi', 'Musik & seni']
 
 // Daftar → <option> untuk <select>
@@ -44,6 +46,7 @@ async function mulaiDashboard(aktif) {
         <p class="text-xl font-semibold mb-3">${esc(profil?.full_name || user.email)}</p>
         ${menu('dashboard-profil.html', 'profil', 'Kelola profil')}${menu('dashboard-karya.html', 'karya', 'Karya saya')}
         <button id="keluar" class="text-left px-4 py-3 text-sm text-black/50 mt-4">Keluar dari akun</button>
+        <a href="hapus-akun.html" class="px-4 py-2 text-sm text-red-800">Hapus akun</a>
       </aside>
       <div id="slot" class="flex-1 p-6 md:p-12 max-w-5xl"></div>
     </div>`
