@@ -1,6 +1,6 @@
 // js/karya.js · Galeri karya terbit dari semua kreator (karya.html)
 const PER_HALAMAN = 12
-const KATEGORI = ['Semua', 'Fotografi', 'Video', 'Dokumenter', 'Desain', 'Penulisan', 'Kerajinan', 'Teknologi', 'Musik & seni']
+const KATEGORI = ['Semua', 'Fotografi', 'Video', 'Dokumenter', 'Desain', 'Penulisan', 'Kerajinan', 'Teknologi', 'Musik & seni', 'Lainnya']
 const TAUTAN = { video: 'Tonton video', link: 'Buka proyek' }
 const state = { kategori: 'Semua', halaman: 0 }
 
@@ -43,7 +43,8 @@ async function muat(tambah = false) {
   let q = supabaseClient.from('portfolios')
     .select('id, title, category, work_type, cover_image, video_url, project_url, user_id, profiles(full_name)', { count: 'exact' })
     .eq('status', 'terbit')
-  if (state.kategori !== 'Semua') q = q.eq('category', state.kategori)
+  if (state.kategori === 'Lainnya') q = q.not('category', 'in', `(${KATEGORI.slice(1, -1).map((k) => `"${k}"`).join(',')})`)   // kategori tulisan sendiri
+  else if (state.kategori !== 'Semua') q = q.eq('category', state.kategori)
   const { data, count, error } = await q.order('updated_at', { ascending: false }).range(dari, dari + PER_HALAMAN - 1)
   if (nomor !== permintaan) return   // hasil basi, abaikan
 
