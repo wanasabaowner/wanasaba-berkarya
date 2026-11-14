@@ -19,20 +19,23 @@
     <div><label class="lbl" for="title">Judul karya *</label><input id="title" maxlength="120" class="in"></div>
     <div><label class="lbl" for="description">Deskripsi *</label><textarea id="description" rows="4" maxlength="2000" class="in"></textarea>
       <p class="text-xs text-black/50 mt-2">Ceritakan ide, proses, atau perananmu dalam karya ini.</p></div>
-    <div><label class="lbl" for="category">Kategori *</label><select id="category" class="in"></select></div>
+    <div><label class="lbl" for="category">Kategori *</label><select id="category" class="in"></select>
+      <input id="category_lain" maxlength="30" class="in mt-2 hidden" placeholder="Tulis kategori karyamu, mis. Kuliner"></div>
 
     <hr class="border-black/10">
     <div><span class="lbl">Jenis karya</span><div id="jenis" class="grid grid-cols-3 gap-3"></div></div>
     <div>
-      <span class="lbl">Gambar sampul / preview *</span>
+      <span id="lbl-sampul" class="lbl">Gambar sampul / preview *</span>
       <div class="flex items-center gap-4">
         <div id="sampul" class="w-40 h-28 rounded overflow-hidden"></div>
-        <label class="btn2 cursor-pointer text-pine">Pilih gambar<input id="file" type="file" accept="image/jpeg,image/png" class="hidden"></label>
+        <label class="btn2 cursor-pointer text-pine"><span id="txt-file">Pilih gambar</span><input id="file" type="file" accept="image/jpeg,image/png" class="hidden"></label>
       </div>
-      <p class="text-xs text-black/50 mt-2">JPG atau PNG, maks. 5 MB. Disarankan rasio 3:2.</p>
+      <p id="hint-sampul" class="text-xs text-black/50 mt-2">JPG atau PNG, maks. 5 MB. Disarankan rasio 3:2.</p>
     </div>
-    <div><label class="lbl" for="video_url">Link video (opsional)</label><input id="video_url" class="in" placeholder="https://youtube.com/... atau https://vimeo.com/..."></div>
-    <div><label class="lbl" for="project_url">Link proyek (opsional)</label><input id="project_url" class="in" placeholder="https://alamat-proyekmu.com"></div>
+    <div id="box-video" class="hidden"><label class="lbl" for="video_url">Link video *</label><input id="video_url" class="in" placeholder="https://youtube.com/... atau https://vimeo.com/...">
+      <p class="text-xs text-black/50 mt-2">Video tidak diunggah ke situs ini. Unggah dulu ke YouTube atau Vimeo, lalu tempel tautannya di sini. Dengan begitu videonya bisa berukuran besar dan tetap lancar diputar.</p></div>
+    <div id="box-proyek" class="hidden"><label class="lbl" for="project_url">Link proyek *</label><input id="project_url" class="in" placeholder="https://alamat-proyekmu.com">
+      <p class="text-xs text-black/50 mt-2">Untuk website, studi kasus, atau proyek di platform lain.</p></div>
 
     <div class="flex flex-wrap items-center justify-end gap-3 pt-2 border-t border-black/10">
       <a href="dashboard-karya.html" class="mr-auto text-black/60">Batal</a>
