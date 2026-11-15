@@ -28,7 +28,20 @@ function gambarAtauInisial(url, nama, kelas) {
 // Dipanggil pertama kali di tiap halaman dashboard:
 // 1) cek sudah login (kalau belum → masuk.html)  2) ambil profil
 // 3) bangun header + sidebar, lalu pindahkan <main id="isi"> ke dalamnya.
+// Layar tidak boleh kosong saat menunggu jawaban dari layanan data. Dulu kerangka
+// dashboard baru digambar SETELAH semua permintaan selesai, jadi bila koneksi macet
+// atau salah satu file JS gagal dimuat, halamannya putih polos tanpa petunjuk apa pun.
+function jagaMemuat() {
+  document.getElementById('shell').innerHTML = '<p id="memuat" class="p-8 text-black/60">Memuat…</p>'
+  setTimeout(() => {
+    const m = document.getElementById('memuat')   // masih ada = kerangka asli belum tergambar
+    if (m) m.innerHTML = 'Belum juga tersambung ke layanan data. Periksa koneksi internetmu. Kalau halaman lain juga gagal dimuat, jaringan ini mungkin memblokir layanan kami, jadi coba pindah ke jaringan lain. '
+      + '<a href="index.html" class="font-semibold text-pine">Kembali ke beranda</a> · <a href="#" onclick="location.reload();return false" class="font-semibold text-pine">Coba lagi</a>'
+  }, 8000)
+}
+
 async function mulaiDashboard(aktif) {
+  jagaMemuat()
   const { data } = await supabaseClient.auth.getSession()
   if (!data.session) { location.href = 'masuk.html'; return null }
   const user = data.session.user
