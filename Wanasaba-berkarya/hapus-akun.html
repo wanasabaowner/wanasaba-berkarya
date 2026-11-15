@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hapus akun · Wanasaba Berkarya</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{pine:'#2f5d43',ink:'#1f2a24',cream:'#f7f6f2',mist:'#ebeee8'}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tema.css"></head>
+<body class="bg-cream text-ink font-sans"><div id="shell"></div>
+
+<main id="isi" class="hidden">
+  <h1 class="text-4xl">Hapus akun</h1>
+  <p class="text-black/60 mt-2 mb-8">Tindakan ini permanen dan tidak bisa dibatalkan.</p>
+  <div id="pesan" class="hidden"></div>
+
+  <section class="bg-white border border-black/10 rounded-md p-6 md:p-8 space-y-5">
+    <h2 class="text-xl">Yang akan terhapus</h2>
+    <ul class="list-disc pl-5 text-black/70 space-y-1">
+      <li>Profil dan foto profilmu. Kamu juga hilang dari katalog.</li>
+      <li>Semua karyamu, yang terbit maupun draf, beserta gambarnya.</li>
+      <li>Akun login. Emailmu dibebaskan, jadi kamu bisa mendaftar lagi kapan saja, tetapi sebagai akun baru yang kosong.</li>
+    </ul>
+
+    <!-- Langkah 1: minta email konfirmasi -->
+    <div id="langkah-1">
+      <p>Demi keamanan, kami kirim tautan konfirmasi ke <strong id="email-akun"></strong>. Buka tautan itu, lalu kamu kembali ke halaman ini untuk langkah terakhir. Tautan berlaku 15 menit.</p>
+      <button id="kirim" class="mt-4 bg-red-800 text-white font-medium rounded-md px-6 py-3 disabled:opacity-60">Kirim email konfirmasi</button>
+    </div>
+
+    <!-- Langkah 2: muncul setelah email terkonfirmasi -->
+    <div id="langkah-2" class="hidden">
+      <p>Email terkonfirmasi. Ketik <strong>HAPUS</strong> untuk melanjutkan.</p>
+      <input id="ketik" autocomplete="off" class="mt-3 w-full max-w-xs bg-white border border-black/15 rounded-md px-4 py-3" placeholder="HAPUS">
+      <div class="mt-4"><button id="hapus" disabled class="bg-red-800 text-white font-medium rounded-md px-6 py-3 disabled:opacity-40">Hapus akun saya permanen</button></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/util.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/hapus-akun.js"></script>
+</body></html>
